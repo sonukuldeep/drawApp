@@ -35,19 +35,19 @@ function App() {
       // positionDot(e, dot)
     })
 
-    topHalf.addEventListener('pointerup', e => {
+    // topHalf.addEventListener('pointerup', e => {
       
-      const dot = document.getElementById(e.pointerId)
-      if (dot === null) return
-      dot.remove()
-    })
+    //   const dot = document.getElementById(e.pointerId)
+    //   if (dot === null) return
+    //   dot.remove()
+    // })
     
-    topHalf.addEventListener('pointercancel', e => {
+    // topHalf.addEventListener('pointercancel', e => {
       
-      const dot = document.getElementById(e.pointerId)
-      if (dot === null) return
-      dot.remove()
-    })
+    //   const dot = document.getElementById(e.pointerId)
+    //   if (dot === null) return
+    //   dot.remove()
+    // })
   }
   function remove() {
     const dots = document.querySelectorAll('.dot')
