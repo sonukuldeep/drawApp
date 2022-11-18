@@ -1,7 +1,8 @@
 import './App.css'
 
 function App() {
-  document.addEventListener('touchstart', e => {
+  document.querySelector('.topHalf').addEventListener('touchstart', e => {
+    e.preventDefault();
     [...e.changedTouches].forEach(touch => {
       const dot = document.createElement('div')
       dot.classList.add('dot')
@@ -31,6 +32,8 @@ function App() {
     const dots = document.querySelectorAll('.dot')
     dots.forEach(dot => { dot.remove() })
   }
+
+  
   return (
     <>
 
