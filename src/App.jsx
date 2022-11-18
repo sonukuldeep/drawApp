@@ -1,43 +1,64 @@
 import './App.css'
 
 function App() {
-  document.querySelector('.topHalf').addEventListener('touchstart', e => {
-    e.preventDefault();
-    [...e.changedTouches].forEach(touch => {
+
+  function positionDot(e, dot) {
+    dot.style.top = `${e.pageY}px`
+    dot.style.left = `${e.pageX}px`
+    dot.style.width = `${e.width * 10}px`
+    dot.style.height = `${e.height * 10}px`
+  }
+  function startDrawing(){
+
+    const topHalf = document.querySelector('.topHalf')
+    topHalf.addEventListener('pointerdown', e => {
       const dot = document.createElement('div')
       dot.classList.add('dot')
-      dot.style.top = `${touch.pageY}px`
-      dot.style.left = `${touch.pageX}px`
-      dot.id = touch.identifier
+      dot.id = e.pointerId
+      positionDot(e, dot)
       document.body.append(dot)
     })
-  })
+    
+    
+    
+    topHalf.addEventListener('pointermove', e => {
+      
+      const dot = document.getElementById(e.pointerId)
+      if (dot === null) return
+      positionDot(e, dot)
+      const newdot = document.createElement('div')
+      newdot.classList.add('dot')
+      positionDot(e, newdot)
 
-  document.addEventListener('touchmove', e => {
-    [...e.changedTouches].forEach(touch => {
-      const dot = document.getElementById(touch.identifier)
-      dot.style.top = `${touch.pageY}px`
-      dot.style.left = `${touch.pageX}px`
+      document.body.append(newdot)
+      
+      // positionDot(e, dot)
     })
-  })
 
-  document.addEventListener('touchend', e => {
-    [...e.changedTouches].forEach(touch => {
-      const dot = document.getElementById(touch.identifier)
+    topHalf.addEventListener('pointerup', e => {
+      
+      const dot = document.getElementById(e.pointerId)
+      if (dot === null) return
       dot.remove()
     })
-  })
-
+    
+    topHalf.addEventListener('pointercancel', e => {
+      
+      const dot = document.getElementById(e.pointerId)
+      if (dot === null) return
+      dot.remove()
+    })
+  }
   function remove() {
     const dots = document.querySelectorAll('.dot')
     dots.forEach(dot => { dot.remove() })
   }
 
-  
+
   return (
     <>
 
-      <div className='topHalf'></div>
+      <div onClick={startDrawing} className='topHalf'></div>
       <div className='relative'>
         <button onClick={remove} className="p-2 border-2 absolute left-[50%] translate-x-[-50%] top-2 border-[#333] hover:border-[#fff] rounded-md bg-white hover:bg-[#333] text-[#333] hover:text-white">Clear</button>
       </div>

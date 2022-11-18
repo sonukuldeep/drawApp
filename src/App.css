@@ -1,6 +1,8 @@
 .topHalf {
   background-color: #333;
   height: 500px;
+  touch-action: none;
+  overflow: hidden;
 }
 
 .dot {
