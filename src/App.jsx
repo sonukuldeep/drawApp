@@ -11,7 +11,7 @@ function App() {
   function startDrawing(){
 
     const topHalf = document.querySelector('.topHalf')
-    topHalf.addEventListener('pointerdown', e => {
+    topHalf.addEventListener('mousedown', e => {
       const dot = document.createElement('div')
       dot.classList.add('dot')
       dot.id = e.pointerId
