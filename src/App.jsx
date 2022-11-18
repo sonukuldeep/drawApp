@@ -12,6 +12,21 @@ function App() {
     })
   })
 
+  document.addEventListener('touchmove', e => {
+    [...e.changedTouches].forEach(touch => {
+      const dot = document.getElementById(touch.identifier)
+      dot.style.top = `${touch.pageY}px`
+      dot.style.left = `${touch.pageX}px`
+    })
+  })
+
+  document.addEventListener('touchend', e => {
+    [...e.changedTouches].forEach(touch => {
+      const dot = document.getElementById(touch.identifier)
+      dot.remove()
+    })
+  })
+
   function remove() {
     const dots = document.querySelectorAll('.dot')
     dots.forEach(dot => { dot.remove() })
