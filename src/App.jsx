@@ -2,7 +2,8 @@ import './App.css'
 import { useState, useEffect, useRef } from 'react'
 
 function App() {
-  const [pathCurrentVal, setPathCurrentVal] = useState("M20 20")
+  const [pathCurrentVal, setPathCurrentVal] = useState("")
+  const [elemants, setElemants] = useState(["M20 20 20 50"])
   const svgElement = useRef("")
   const [fireStatus, setFireStatus] = useState(false)
 
@@ -55,7 +56,7 @@ function App() {
         const tempSlice = pathCurrentVal.split(' ')
         tempSlice.splice(-2,2)
         setPathCurrentVal(tempSlice.join(" ") + " M" + xCoordinate + " " + yCoordinate)
-        console.log(pathCurrentVal)
+        // console.log(pathCurrentVal)
       }
     }
 
@@ -104,7 +105,8 @@ function App() {
       {/* <div onPointerDown={(e) => pointerDown(e)} onPointerMove={(e) => { pointerMove(e) }} onPointerUp={(e) => { pointerUp(e) }} onPointerCancel={(e) => { pointerCancel(e) }} className='topHalf'> */}
       <div onMouseDown={(e) => pointerDown(e)} onPointerMove={(e) => { pointerMove(e) }} onPointerUp={(e) => { pointerUp(e) }} className='topHalf'>
         <svg ref={svgElement} width="1500" height="500" xmlns="http://www.w3.org/2000/svg">
-          <path d="M20 20 306 160" fill="none" stroke="white" strokeWidth="3"></path>
+          {elemants.map((element,index)=>{return <path key={index} d={element} fill="none" stroke="white" strokeWidth="3"></path>})}
+          {/* <path d="M20 20 306 160" fill="none" stroke="white" strokeWidth="3"></path> */}
         </svg>
       </div>
       <div className='relative'>
