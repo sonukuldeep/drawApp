@@ -1,15 +1,34 @@
 import './App.css'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useId } from 'react'
 
 function App() {
   const [pathCurrentVal, setPathCurrentVal] = useState("")
-  const [elemants, setElemants] = useState(["M20 20 20 50"])
-  const svgElement = useRef("")
+  const [elemants, setElemants] = useState([{'d':'M20 20 20 50', 'stroke': 'white', 'strokeWidth': '1', 'id': '1'}])
   const [fireStatus, setFireStatus] = useState(false)
+  const [select, setSelect] = useState(false)
+  const [currentSelect, setCurrentSelect] = useState('1')
+  const [currentPathWidth, setCurrentPathWidth] = useState('1')
+  const svgElement = useRef("")
+  const svgLineSize = useRef("")
+  const selectBtn = useRef("")
 
+  //change last path d value
   useEffect(() => {
-    svgElement.current.lastChild.setAttribute('d', pathCurrentVal)
+    if (!select)
+      svgElement.current.lastChild.setAttribute('d', pathCurrentVal)  
   }, [pathCurrentVal,])
+
+  //btn active toggle that changes color via css
+  useEffect(() => {
+    selectBtn.current.classList.toggle('active')    
+  }, [select])
+
+  //select element and do something
+  useEffect(()=>{
+    // console.log(currentSelect)
+    
+    document.getElementById(currentSelect).setAttribute('stroke-width', currentPathWidth)
+  },[currentSelect,currentPathWidth])
 
   function positionDot(e, dot) {
     dot.style.top = `${e.pageY}px`
@@ -18,11 +37,7 @@ function App() {
     dot.style.height = `${e.height * 10}px`
   }
   const pointerDown = (e) => {
-    // const dot = document.createElement('div')
-    // dot.classList.add('dot')
-    // dot.id = e.pointerId
-    // positionDot(e, dot)
-    // e.target.appendChild(dot)
+
     const xCoordinate = e.clientX
     const yCoordinate = e.clientY
     setPathCurrentVal(pathCurrentVal + " " + xCoordinate + " " + yCoordinate)
@@ -30,55 +45,35 @@ function App() {
   }
 
   const pointerMove = (e) => {
-    // const dot = document.getElementById(e.pointerId)
-    // if (dot === null) return
-    // positionDot(e, dot)
-    //makes lines
-    // const newDot = document.createElement('div')
-    // newDot.classList.add('dot')
-    // positionDot(e, newDot)
-    // e.target.appendChild(newDot)
-    //makes lines
-    // console.log(e.button)
+
     if (fireStatus) {
       const xCoordinate = e.clientX
       const yCoordinate = e.clientY
       setPathCurrentVal(pathCurrentVal + " " + xCoordinate + " " + yCoordinate)
     }
 
-    // continue in the same path
     if (!fireStatus) {
       const xCoordinate = e.clientX
       const yCoordinate = e.clientY
       setPathCurrentVal(pathCurrentVal + " M" + xCoordinate + " " + yCoordinate)
 
-      if(pathCurrentVal.split(' ').slice(-2)[0].includes('M')) {
+      if (pathCurrentVal.split(' ').slice(-2)[0].includes('M')) {
         const tempSlice = pathCurrentVal.split(' ')
-        tempSlice.splice(-2,2)
-        setPathCurrentVal(tempSlice.join(" ") + " M" + xCoordinate + " " + yCoordinate)
-        // console.log(pathCurrentVal)
+        tempSlice.splice(-2, 2)
+        setPathCurrentVal("M" + xCoordinate + " " + yCoordinate)
+
       }
     }
 
-    //create new path element
-    // in pointerUp function
   }
 
   const pointerUp = (e) => {
-    // const dot = document.getElementById(e.pointerId)
-    // if (dot === null) return
-    // dot.remove()
+    if (!select) {
+      var randomID = Math.floor(Math.random()*16777215).toString(16)
+      const pathProperties = {'d': 'M20 20','stroke': 'white', 'strokeWidth': '2', 'id': randomID}
+      setElemants([...elemants, pathProperties])
+    }
     setFireStatus(false)
-    //createing new path 
-    // <path d="M20 20 306 160" fill="none" stroke="blue" stroke-width="5"></path>
-    // const path = document.createElement('path')
-    // path.setAttribute('stroke', 'white')
-    // path.setAttribute('fill', 'none')
-    // path.setAttribute('stroke-width', '3')
-    // const xCoordinate = e.clientX
-    // const yCoordinate = e.clientY
-    // path.setAttribute('d', "M" + xCoordinate + " " + yCoordinate)
-    // svgElement.current.appendChild(path)
 
   }
 
@@ -94,23 +89,21 @@ function App() {
     dots.forEach(dot => { dot.remove() })
   }
 
-  // function runOnce(e) {
-  //   const { width, height } = e.target.getBoundingClientRect()
-  //   console.log({ width, height })
-  // }
-
   return (
     <>
 
-      {/* <div onPointerDown={(e) => pointerDown(e)} onPointerMove={(e) => { pointerMove(e) }} onPointerUp={(e) => { pointerUp(e) }} onPointerCancel={(e) => { pointerCancel(e) }} className='topHalf'> */}
       <div onMouseDown={(e) => pointerDown(e)} onPointerMove={(e) => { pointerMove(e) }} onPointerUp={(e) => { pointerUp(e) }} className='topHalf'>
         <svg ref={svgElement} width="1500" height="500" xmlns="http://www.w3.org/2000/svg">
-          {elemants.map((element,index)=>{return <path key={index} d={element} fill="none" stroke="white" strokeWidth="3"></path>})}
-          {/* <path d="M20 20 306 160" fill="none" stroke="white" strokeWidth="3"></path> */}
+          {elemants.map((element, index) => { return <path onClick={(e) => {if(select) setCurrentSelect(e.target.id) }} key={index} id={element.id} d={element.d} fill="none" stroke={element.stroke} strokeWidth={element.stroke}></path> })}
         </svg>
       </div>
       <div className='relative'>
-        <button onClick={remove} className="p-2 border-2 absolute left-[50%] translate-x-[-50%] top-2 border-[#333] hover:border-[#fff] rounded-md bg-white hover:bg-[#333] text-[#333] hover:text-white">Clear</button>
+        <div className="absolute left-[50%] translate-x-[-50%] top-2">
+
+          <button className='p-2 border-2 m-2 border-[#333] hover:border-[#fff] rounded-md bg-white hover:bg-[#333] text-[#333] hover:text-white' onClick={remove}>Clear</button>
+          <input ref={svgLineSize} className='p-2 border-2 m-2 outline-none border-[#333] rounded-md bg-white text-[#333] w-[100px]' placeholder='line size' onChange={(e) => setCurrentPathWidth(e.target.value)} type="number" min='1' max='5' />
+          <button data-select='btn' ref={selectBtn} onClick={() => { setSelect(!select) }} className='p-2 border-2 m-2 border-[#333] rounded-md bg-white text-[#333]' >Select</button>
+        </div>
       </div>
     </>
   )

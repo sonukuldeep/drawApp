@@ -18,3 +18,12 @@ body {
   margin: 0;
   padding: 0;
 }
+
+path {
+  cursor:grab;
+}
+
+button.active {
+  background-color: green;
+  color:aliceblue;
+}
