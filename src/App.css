@@ -1,29 +1,10 @@
-.topHalf {
-  background-color: #333;
-  height: 500px;
-  touch-action: none;
-  overflow: hidden;
-}
-
-.dot {
-  background-color: aquamarine;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 50%;
-  position: absolute;
-  transform: translate(-50%,-50%);
-}
-
 body { 
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  height: 100%;
 }
 
-path {
-  cursor:grab;
-}
-
-button.active {
-  background-color: green;
-  color:aliceblue;
-}
+/* svg {
+  height: calc(100vh - 140px);
+} */
