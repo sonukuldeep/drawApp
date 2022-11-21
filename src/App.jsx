@@ -33,8 +33,8 @@ function App() {
 
   const pointerDown = (e) => {
     
-    const xCoordinate = e.clientX
-    const yCoordinate = e.clientY
+    const xCoordinate = e.pageX
+    const yCoordinate = e.pageY - 80
     setPathCurrentVal(pathCurrentVal + " " + xCoordinate + " " + yCoordinate)
     setFireStatus(true)
   }
@@ -42,14 +42,14 @@ function App() {
   const pointerMove = (e) => {
     
     if (fireStatus) {
-      const xCoordinate = e.clientX
-      const yCoordinate = e.clientY
+      const xCoordinate = e.pageX
+      const yCoordinate = e.pageY - 80
       setPathCurrentVal(pathCurrentVal + " " + xCoordinate + " " + yCoordinate)
     }
     
     if (!fireStatus) {
-      const xCoordinate = e.clientX
-      const yCoordinate = e.clientY
+      const xCoordinate = e.pageX
+      const yCoordinate = e.pageY - 80
       setPathCurrentVal(pathCurrentVal + " M" + xCoordinate + " " + yCoordinate)
       
       if (pathCurrentVal.split(' ').slice(-2)[0].includes('M')) {
