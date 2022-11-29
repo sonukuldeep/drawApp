@@ -11,14 +11,20 @@ const Navbar = ({ remove, colorChange, lineWidth, selectLine }) => {
                     </div>
 
                     <div className="hidden ml-10 lg:flex lg:items-center lg:mr-auto lg:space-x-10">
-                        <div onClick={() => { lineWidth() }} className="text-base font-medium text-[#515a6e] transition-all duration-200 hover:text-[#ea7e5a] hover:cursor-pointer"> Pencil </div>
+                        <div className="text-base font-medium text-[#515a6e] transition-all duration-200 hover:text-[#ea7e5a] relative">Pencil<ul className='absolute flex flex-col justify-evenly items-center w-10 p-3 rounded-sm text-white' >
+                        <li onClick={()=>{lineWidth(1)}} className='font-semibold hover:cursor-pointer'>|</li>
+                        <li onClick={()=>{lineWidth(2)}} className='font-bold hover:cursor-pointer'>|</li>
+                        <li onClick={()=>{lineWidth(3)}} className='font-bold text-xl hover:cursor-pointer'>|</li>
+                            <li onClick={()=>{lineWidth(4)}} className='font-bold text-3xl hover:cursor-pointer'>|</li>
+                            </ul></div>
+                        {/* <div onClick={() => { lineWidth() }} className="text-base font-medium text-[#515a6e] transition-all duration-200 hover:text-[#ea7e5a] hover:cursor-pointer"> Pencil </div> */}
 
                         <div onClick={() => { remove() }} className="text-base font-medium text-[#515a6e] transition-all duration-200 hover:text-[#ea7e5a] hover:cursor-pointer"> Eraser All </div>
 
                         <div onClick={() => { selectLine() }} className="text-base font-medium text-[#515a6e] transition-all duration-200 hover:text-[#ea7e5a] hover:cursor-pointer"> Select </div>
 
                         {/* <div onClick={() => { colorChange() }} className="text-base font-medium text-[#515a6e] transition-all duration-200 hover:text-[#ea7e5a] hover:cursor-pointer"> Color </div> */}
-                        <div className="text-base font-medium text-[#515a6e] transition-all duration-200 hover:text-[#ea7e5a] hover:cursor-pointer"> Color <input type="color" onChange={e=>colorChange(e.target.value)}/> </div>
+                        <div className="text-base font-medium text-[#515a6e] transition-all duration-200 hover:text-[#ea7e5a] hover:cursor-pointer"> Color <input className="w-8 h-8 rounded-lg" type="color" onChange={e=>colorChange(e.target.value)}/> </div>
 
                     </div>
 

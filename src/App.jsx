@@ -29,9 +29,9 @@ function App() {
 
   //select element and do something
   useEffect(() => {
-    // console.log(currentSelect)
-
-    document.getElementById(currentSelect)?.setAttribute('stroke-width', currentPathWidth)
+    const selectingLastPath = document.getElementById(elemants[elemants.length-1].id)
+    selectingLastPath.setAttribute('stroke-width', currentPathWidth)
+    // document.getElementById(currentSelect)?.setAttribute('stroke-width', currentPathWidth)
   }, [currentSelect, currentPathWidth])
 
   const pointerDown = (e) => {
@@ -67,7 +67,7 @@ function App() {
   const pointerUp = (e) => {
     if (!select) {
       var randomID = Math.floor(Math.random() * 16777215).toString(16)
-      const pathProperties = { 'd': 'M20 20', 'stroke': color, 'strokeWidth': '1', 'id': randomID }
+      const pathProperties = { 'd': 'M20 20', 'stroke': color, 'strokeWidth': currentPathWidth, 'id': randomID }
       setElemants([...elemants, pathProperties])
     }
     setFireStatus(false)
@@ -83,11 +83,10 @@ function App() {
   
   function remove() {
     setElemants([{ 'd': 'M20 20', 'stroke': color, 'strokeWidth': '1', 'id': '1' }])
-    console.log(pathCurrentVal)
   }
   
-  function lineWidth() {
-    console.log('line width')
+  function lineWidth(width) {
+    setCurrentPathWidth(width)
   }
 
   function selectLine() {
