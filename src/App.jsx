@@ -9,6 +9,7 @@ function App() {
   const [select, setSelect] = useState(false)
   const [currentSelect, setCurrentSelect] = useState('1')
   const [currentPathWidth, setCurrentPathWidth] = useState('1')
+  const [color, setColor] = useState("#FFF")
   const svgElement = useRef("")
   const svgLineSize = useRef("")
   const selectBtn = useRef("")
@@ -16,19 +17,21 @@ function App() {
   //change last path d value
   useEffect(() => {
     if (!select)
-      svgElement.current.lastChild.setAttribute('d', pathCurrentVal)
+      svgElement.current.lastChild?.setAttribute('d', pathCurrentVal)
   }, [pathCurrentVal,])
 
   //btn active toggle that changes color via css
   useEffect(() => {
     // selectBtn.current.classList.toggle('active')
-  }, [select])
+    const selectingLastPath = document.getElementById(elemants[elemants.length-1].id)
+    selectingLastPath.setAttribute('stroke', color)
+  }, [select,color])
 
   //select element and do something
   useEffect(() => {
     // console.log(currentSelect)
 
-    document.getElementById(currentSelect).setAttribute('stroke-width', currentPathWidth)
+    document.getElementById(currentSelect)?.setAttribute('stroke-width', currentPathWidth)
   }, [currentSelect, currentPathWidth])
 
   const pointerDown = (e) => {
@@ -40,13 +43,13 @@ function App() {
   }
   
   const pointerMove = (e) => {
-    
     if (fireStatus) {
       const xCoordinate = e.pageX
       const yCoordinate = e.pageY - 80
       setPathCurrentVal(pathCurrentVal + " " + xCoordinate + " " + yCoordinate)
     }
     
+    // console.log('fire')
     if (!fireStatus) {
       const xCoordinate = e.pageX
       const yCoordinate = e.pageY - 80
@@ -59,13 +62,12 @@ function App() {
         
       }
     }
-    
   }
   
   const pointerUp = (e) => {
     if (!select) {
       var randomID = Math.floor(Math.random() * 16777215).toString(16)
-      const pathProperties = { 'd': 'M20 20', 'stroke': 'white', 'strokeWidth': '2', 'id': randomID }
+      const pathProperties = { 'd': 'M20 20', 'stroke': color, 'strokeWidth': '1', 'id': randomID }
       setElemants([...elemants, pathProperties])
     }
     setFireStatus(false)
@@ -80,11 +82,8 @@ function App() {
   }
   
   function remove() {
-    console.log('remove')
-  }
-  
-  function colorChange() {
-    console.log('change color')
+    setElemants([{ 'd': 'M20 20', 'stroke': color, 'strokeWidth': '1', 'id': '1' }])
+    console.log(pathCurrentVal)
   }
   
   function lineWidth() {
@@ -97,10 +96,10 @@ function App() {
   
   return (
     <>
-      <Layout remove={remove} colorChange={colorChange} selectLine={selectLine} lineWidth={lineWidth}>
+      <Layout remove={remove} colorChange={setColor} selectLine={selectLine} lineWidth={lineWidth}>
         <div onMouseDown={(e) => pointerDown(e)} onPointerMove={(e) => { pointerMove(e) }} onPointerUp={(e) => { pointerUp(e) }} className='bg-[#333] touch-none'>
           <svg ref={svgElement} xmlns="http://www.w3.org/2000/svg" className='h-[calc(100vh_-_140px)] w-full'>
-            {elemants.map((element, index) => { return <path onClick={(e) => { if (select) setCurrentSelect(e.target.id) }} key={index} id={element.id} d={element.d} fill="none" stroke={element.stroke} strokeWidth={element.stroke}></path> })}
+            {elemants.map((element, index) => { return <path onClick={(e) => { if (select) setCurrentSelect(e.target.id) }} key={index} id={element.id} d={element.d} fill="none" stroke={element.stroke} strokeWidth={element.strokeWidth}></path> })}
           </svg>
         </div>
       </Layout>

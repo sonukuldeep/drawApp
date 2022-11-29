@@ -11,13 +11,15 @@ const Navbar = ({ remove, colorChange, lineWidth, selectLine }) => {
                     </div>
 
                     <div className="hidden ml-10 lg:flex lg:items-center lg:mr-auto lg:space-x-10">
-                        <div onClick={() => { lineWidth() }} className="text-base font-medium text-[#515a6e] transition-all duration-200 hover:text-[#ea7e5a]"> Pencil </div>
+                        <div onClick={() => { lineWidth() }} className="text-base font-medium text-[#515a6e] transition-all duration-200 hover:text-[#ea7e5a] hover:cursor-pointer"> Pencil </div>
 
-                        <div onClick={() => { remove() }} className="text-base font-medium text-[#515a6e] transition-all duration-200 hover:text-[#ea7e5a]"> Eraser </div>
+                        <div onClick={() => { remove() }} className="text-base font-medium text-[#515a6e] transition-all duration-200 hover:text-[#ea7e5a] hover:cursor-pointer"> Eraser All </div>
 
-                        <div onClick={() => { selectLine() }} className="text-base font-medium text-[#515a6e] transition-all duration-200 hover:text-[#ea7e5a]"> Select </div>
+                        <div onClick={() => { selectLine() }} className="text-base font-medium text-[#515a6e] transition-all duration-200 hover:text-[#ea7e5a] hover:cursor-pointer"> Select </div>
 
-                        <div onClick={() => { colorChange() }} className="text-base font-medium text-[#515a6e] transition-all duration-200 hover:text-[#ea7e5a]"> Color </div>
+                        {/* <div onClick={() => { colorChange() }} className="text-base font-medium text-[#515a6e] transition-all duration-200 hover:text-[#ea7e5a] hover:cursor-pointer"> Color </div> */}
+                        <div className="text-base font-medium text-[#515a6e] transition-all duration-200 hover:text-[#ea7e5a] hover:cursor-pointer"> Color <input type="color" onChange={e=>colorChange(e.target.value)}/> </div>
+
                     </div>
 
                 </nav>
