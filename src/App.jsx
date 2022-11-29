@@ -4,12 +4,12 @@ import Layout from './Components/Layout'
 
 function App() {
   const [pathCurrentVal, setPathCurrentVal] = useState("")
-  const [elemants, setElemants] = useState([{ 'd': 'M20 20 20 50', 'stroke': 'white', 'strokeWidth': '1', 'id': '1' }])
+  const [elemants, setElemants] = useState([{ 'd': 'M20 20 20 50', 'stroke': '#54b6a4', 'strokeWidth': '1', 'id': '1' }])
   const [fireStatus, setFireStatus] = useState(false)
   const [select, setSelect] = useState(false)
   const [currentSelect, setCurrentSelect] = useState('1')
   const [currentPathWidth, setCurrentPathWidth] = useState('1')
-  const [color, setColor] = useState("#FFF")
+  const [color, setColor] = useState("#54b6a4")
   const svgElement = useRef("")
   const svgLineSize = useRef("")
   const selectBtn = useRef("")
@@ -95,8 +95,8 @@ function App() {
   
   return (
     <>
-      <Layout remove={remove} colorChange={setColor} selectLine={selectLine} lineWidth={lineWidth}>
-        <div onMouseDown={(e) => pointerDown(e)} onPointerMove={(e) => { pointerMove(e) }} onPointerUp={(e) => { pointerUp(e) }} className='bg-[#333] touch-none'>
+      <Layout remove={remove} colorChange={setColor} selectLine={selectLine} width={currentPathWidth} lineWidth={lineWidth}>
+        <div onPointerDown={(e) => pointerDown(e)} onPointerMove={(e) => { pointerMove(e) }} onPointerUp={(e) => { pointerUp(e) }} className='bg-[#333] touch-none'>
           <svg ref={svgElement} xmlns="http://www.w3.org/2000/svg" className='h-[calc(100vh_-_140px)] w-full'>
             {elemants.map((element, index) => { return <path onClick={(e) => { if (select) setCurrentSelect(e.target.id) }} key={index} id={element.id} d={element.d} fill="none" stroke={element.stroke} strokeWidth={element.strokeWidth}></path> })}
           </svg>

@@ -5,7 +5,7 @@ import Footer from './Footer'
 const Layout = (props) => {
   return (
     <>
-        <Navbar remove={props.remove} colorChange={props.colorChange} lineWidth={props.lineWidth} selectLine={props.selectLine}/>  
+        <Navbar remove={props.remove} width={props.width} colorChange={props.colorChange} lineWidth={props.lineWidth} selectLine={props.selectLine}/>  
         {props.children}
         <Footer/>
     </>
