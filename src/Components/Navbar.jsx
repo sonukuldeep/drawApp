@@ -7,7 +7,7 @@ const Navbar = ({ remove, colorChange, lineWidth, selectLine, width }) => {
         const newLineWidth = ["text-[#ea7e5a]","text-[#ea7e5a]","text-[#ea7e5a]","text-[#ea7e5a]"]
         newLineWidth[width-1] = "text-[#5cbf96]"
         setLineW(newLineWidth)
-        console.log(lineW)
+        // console.log(lineW)
     },[width])
 
     return (

@@ -48,8 +48,8 @@ function App() {
       const yCoordinate = e.pageY - 80
       setPathCurrentVal(pathCurrentVal + " " + xCoordinate + " " + yCoordinate)
     }
+    // console.log({x:e.pageX,y:e.pageY})
     
-    // console.log('fire')
     if (!fireStatus) {
       const xCoordinate = e.pageX
       const yCoordinate = e.pageY - 80
@@ -71,14 +71,16 @@ function App() {
       setElemants([...elemants, pathProperties])
     }
     setFireStatus(false)
-    
   }
   
   const pointerCancel = (e) => {
     
-    const dot = document.getElementById(e.pointerId)
-    if (dot === null) return
-    dot.remove()
+    if (!select) {
+      var randomID = Math.floor(Math.random() * 16777215).toString(16)
+      const pathProperties = { 'd': 'M20 20', 'stroke': color, 'strokeWidth': currentPathWidth, 'id': randomID }
+      setElemants([...elemants, pathProperties])
+    }
+    setFireStatus(false)
   }
   
   function remove() {
@@ -96,7 +98,7 @@ function App() {
   return (
     <>
       <Layout remove={remove} colorChange={setColor} selectLine={selectLine} width={currentPathWidth} lineWidth={lineWidth}>
-        <div onPointerDown={(e) => pointerDown(e)} onPointerMove={(e) => { pointerMove(e) }} onPointerUp={(e) => { pointerUp(e) }} className='bg-[#333] touch-none'>
+        <div onPointerDown={(e) => pointerDown(e)} onPointerMove={(e) => { pointerMove(e) }} onPointerUp={(e) => { pointerUp(e) }} draggable="false" className='bg-[#333] touch-none'>
           <svg ref={svgElement} xmlns="http://www.w3.org/2000/svg" className='h-[calc(100vh_-_140px)] w-full'>
             {elemants.map((element, index) => { return <path onClick={(e) => { if (select) setCurrentSelect(e.target.id) }} key={index} id={element.id} d={element.d} fill="none" stroke={element.stroke} strokeWidth={element.strokeWidth}></path> })}
           </svg>
