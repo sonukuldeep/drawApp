@@ -1,14 +1,14 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import logo from '../assets/images/logo.png'
 
 const Navbar = ({ remove, colorChange, lineWidth, selectLine, width }) => {
-    const [lineW, setLineW] = useState(["text-[#ea7e5a]","text-[#ea7e5a]","text-[#ea7e5a]","text-[#ea7e5a]"]) 
-    useEffect(()=>{
-        const newLineWidth = ["text-[#ea7e5a]","text-[#ea7e5a]","text-[#ea7e5a]","text-[#ea7e5a]"]
-        newLineWidth[width-1] = "text-[#5cbf96]"
+    const [lineW, setLineW] = useState(["text-[#ea7e5a]", "text-[#ea7e5a]", "text-[#ea7e5a]", "text-[#ea7e5a]"])
+    useEffect(() => {
+        const newLineWidth = ["text-[#ea7e5a]", "text-[#ea7e5a]", "text-[#ea7e5a]", "text-[#ea7e5a]"]
+        newLineWidth[width - 1] = "text-[#5cbf96]"
         setLineW(newLineWidth)
         // console.log(lineW)
-    },[width])
+    }, [width])
 
     return (
         <header className="bg-gradient-to-r from-[#5cbf96] to-[#49aab7] lg:py-4 text-white">
@@ -41,21 +41,15 @@ const Navbar = ({ remove, colorChange, lineWidth, selectLine, width }) => {
 
                 <nav className="flex flex-row py-1 rounded-md lg:hidden">
 
-                    <div className='flex justify-center items-center px-2 bg-[rgba(255,255,255,0.5)] pl-5 rounded-l-lg'>
+                    <div className='flex justify-center items-center px-2 bg-[rgba(255,255,255,0.5)] pl-5 rounded-lg w-[95vw]'>
                         <img className="w-auto h-8 lg:h-10" src={logo} alt="Logo" />
-                        <div className='px-2'>
-                            <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200"> Pencil </div>
-                            <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200"> Eraser </div>
+                        <div className='px-2 py-2 grid grid-flow-col gap-3 place-items-center'>
+                            <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200">Pencil</div>
+                            <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200">Eraser</div>
+                            <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200">Select</div>
+                            <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200"><div className='flex place-items-center gap-2'><span>Color</span><div className='w-8 h-8 outline-none rounded-full overflow-hidden'><input type="color" /></div></div></div>
                         </div>
-
                     </div>
-                    <div className='px-2 bg-[rgba(255,255,255,0.5)] pr-[40%] sm:pr-[75%] rounded-r-lg'>
-                        <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200"> Select </div>
-
-                        <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200"><div className='flex place-items-center gap-2'><span>Color</span><input type="color" /></div></div>
-                    </div>
-
-
                 </nav>
             </div>
         </header>
