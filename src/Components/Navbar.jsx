@@ -61,7 +61,7 @@ const Navbar = ({ remove, colorChange, lineWidth, selectLine, width }) => {
                                 </div> : ""}
                             </div>
                             <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200">Select</div>
-                            <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200"><div className='flex place-items-center gap-2'><span>Color</span><div className='w-8 h-8 outline-none rounded-full overflow-hidden'><input type="color" /></div></div></div>
+                            <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200"><div className='flex place-items-center gap-2'><span>Color</span><div className='w-6 h-6 outline-none rounded-full overflow-hidden'><input type="color" /></div></div></div>
                         </div>
                     </div>
                 </nav>
