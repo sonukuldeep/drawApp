@@ -57,23 +57,23 @@ const Navbar = ({ remove, colorChange, lineWidth, selectLine, width }) => {
                             <div ref={pensilDiv} className="text-lg font-semibold text-[#515a6e] transition-all duration-200 relative">Pencil
                             {pensilToggleBtn ? <div className='flex flex-col place-items-center absolute bg-[rgba(255,255,255,0.5)] px-2 rounded-md left-1/2 -translate-x-1/2'>
                                     <ul className='w-max flex flex-col place-items-center'>
-                                        <li className='w-full m-1 px-3 text-center'>Small Tip</li>
-                                        <li className='w-full m-1 px-3 text-center'>Medium Tip</li>
-                                        <li className='w-full m-1 px-3 text-center'>Large Tip</li>
-                                        <li className='w-full m-1 px-3 text-center'>Very Large Tip</li>
+                                        <li onClick={() => { lineWidth(1) }} className='w-full m-1 px-3 text-center'>Small Tip</li>
+                                        <li onClick={() => { lineWidth(2) }} className='w-full m-1 px-3 text-center'>Medium Tip</li>
+                                        <li onClick={() => { lineWidth(3) }} className='w-full m-1 px-3 text-center'>Large Tip</li>
+                                        <li onClick={() => { lineWidth(4) }} className='w-full m-1 px-3 text-center'>Very Large Tip</li>
                                     </ul>
                                 </div> : ""}
                             </div>
                             <div ref={eraserDiv} className="text-lg font-semibold text-[#515a6e] transition-all duration-200 relative">Eraser
                                 {eraserToggleBtn ? <div className='flex flex-col place-items-center absolute bg-[rgba(255,255,255,0.5)] px-2 rounded-md left-1/2 -translate-x-1/2'>
                                     <ul className='w-max flex flex-col place-items-center'>
-                                        <li className='w-full m-1 px-3 text-center'>Erase All</li>
+                                        <li onClick={() => { remove() }} className='w-full m-1 px-3 text-center'>Erase All</li>
                                         <li className='w-full m-1 px-3 text-center'>Erase Selected</li>
                                     </ul>
                                 </div> : ""}
                             </div>
                             <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200">Select</div>
-                            <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200"><div className='flex place-items-center gap-2'><span>Color</span><div className='w-6 h-6 outline-none rounded-full overflow-hidden'><input type="color" /></div></div></div>
+                            <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200"><div className='flex place-items-center gap-2'><span>Color</span><div className='w-6 h-6 outline-none rounded-full overflow-hidden'><input type="color" defaultValue="#54b6a4" onChange={e => colorChange(e.target.value)}/></div></div></div>
                         </div>
                     </div>
                 </nav>
