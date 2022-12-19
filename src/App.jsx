@@ -51,13 +51,21 @@ function App() {
   }
 
   const touchUp = (e) => {
-
-
+    
+    if (!select) {
+      var randomID = Math.floor(Math.random() * 16777215).toString(16)
+      const pathProperties = { 'd': 'M20 20', 'stroke': color, 'strokeWidth': currentPathWidth, 'id': randomID }
+      setElemants([...elemants, pathProperties])
+    }
+    setFireStatus(false)
   }
 
   const touchDown = (e) => {
 
-
+    const xCoordinate = e.pageX
+    const yCoordinate = e.pageY - 80
+    setPathCurrentVal(pathCurrentVal + " " + xCoordinate + " " + yCoordinate)
+    setFireStatus(true)
   }
   const pointerDown = (e) => {
 
