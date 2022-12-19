@@ -50,15 +50,14 @@ const Navbar = ({ remove, colorChange, lineWidth, selectLine, width }) => {
 
                     <div className='flex justify-center items-center px-2 bg-[rgba(255,255,255,0.5)] pl-5 rounded-lg w-[95vw]'>
                         <img className="w-auto h-8 lg:h-10" src={logo} alt="Logo" />
-                        <div className='px-2 py-2 grid grid-flow-col gap-3 place-items-center'>
+                        <div className='px-2 py-4 grid grid-flow-col gap-3 place-items-center'>
                             <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200">Pencil</div>
-                            <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200 relative">Eraser
+                            <div ref={eraserDiv} className="text-lg font-semibold text-[#515a6e] transition-all duration-200 relative">Eraser
                                 {eraserToggleBtn ? <div className='flex flex-col place-items-center absolute bg-[rgba(255,255,255,0.5)] px-2 rounded-md left-1/2 -translate-x-1/2'>
-                                    <ul>
-                                        <li>Erase All</li>
-                                        <li>Erase Selected</li>
+                                    <ul className='w-max flex flex-col place-items-center'>
+                                        <li className='w-full m-1 px-3 text-center'>Erase All</li>
+                                        <li className='w-full m-1 px-3 text-center'>Erase Selected</li>
                                     </ul>
-
                                 </div> : ""}
                             </div>
                             <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200">Select</div>
