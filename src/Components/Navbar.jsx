@@ -1,14 +1,21 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import logo from '../assets/images/logo.png'
 
 const Navbar = ({ remove, colorChange, lineWidth, selectLine, width }) => {
     const [lineW, setLineW] = useState(["text-[#ea7e5a]", "text-[#ea7e5a]", "text-[#ea7e5a]", "text-[#ea7e5a]"])
+    const [eraserToggleBtn, setEraseBtnToggle] = useState(false)
+    const eraserDiv = useRef(null);
+  
+    useOutsideAlerter(eraserDiv,setEraseBtnToggle)
+
+
     useEffect(() => {
         const newLineWidth = ["text-[#ea7e5a]", "text-[#ea7e5a]", "text-[#ea7e5a]", "text-[#ea7e5a]"]
         newLineWidth[width - 1] = "text-[#5cbf96]"
         setLineW(newLineWidth)
         // console.log(lineW)
     }, [width])
+
 
     return (
         <header className="bg-gradient-to-r from-[#5cbf96] to-[#49aab7] lg:py-4 text-white">
@@ -45,7 +52,15 @@ const Navbar = ({ remove, colorChange, lineWidth, selectLine, width }) => {
                         <img className="w-auto h-8 lg:h-10" src={logo} alt="Logo" />
                         <div className='px-2 py-2 grid grid-flow-col gap-3 place-items-center'>
                             <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200">Pencil</div>
-                            <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200">Eraser</div>
+                            <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200 relative">Eraser
+                                {eraserToggleBtn ? <div className='flex flex-col place-items-center absolute bg-[rgba(255,255,255,0.5)] px-2 rounded-md left-1/2 -translate-x-1/2'>
+                                    <ul>
+                                        <li>Erase All</li>
+                                        <li>Erase Selected</li>
+                                    </ul>
+
+                                </div> : ""}
+                            </div>
                             <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200">Select</div>
                             <div className="text-lg font-semibold text-[#515a6e] transition-all duration-200"><div className='flex place-items-center gap-2'><span>Color</span><div className='w-8 h-8 outline-none rounded-full overflow-hidden'><input type="color" /></div></div></div>
                         </div>
@@ -58,3 +73,22 @@ const Navbar = ({ remove, colorChange, lineWidth, selectLine, width }) => {
 }
 
 export default Navbar
+
+function useOutsideAlerter(ref,setToggleBtn) {
+    useEffect(() => {
+      // Function for click event
+      function handleOutsideClick(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          //clicked outside
+          setToggleBtn(false)
+        }else {
+          //clicked inside
+          setToggleBtn(preVal=>!preVal)
+        }
+      }
+  
+      // Adding click event listener
+      document.addEventListener("click", handleOutsideClick);
+      return () => document.removeEventListener("click", handleOutsideClick);
+    }, [ref]);
+  }
