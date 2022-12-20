@@ -49,23 +49,49 @@ function App() {
     onDevice.current.mobile = true
 
   }
-
+  const startVal = useRef({'start': 'M'});
+  
   const touchUp = (e) => {
+    e.preventDefault()
     
-    if (!select) {
+    // if (!select) {
       var randomID = Math.floor(Math.random() * 16777215).toString(16)
-      const pathProperties = { 'd': 'M20 20', 'stroke': color, 'strokeWidth': currentPathWidth, 'id': randomID }
-      setElemants([...elemants, pathProperties])
-    }
-    setFireStatus(false)
+    const xCoordinate = e.pageX
+    const yCoordinate = e.pageY - 80
+    const pathProperties = { 'd': `M${xCoordinate} ${yCoordinate}`, 'stroke': color, 'strokeWidth': currentPathWidth, 'id': randomID }
+      setElemants([...elemants, pathProperties,pathProperties])
+    // }
+    // const xCoordinate = e.nativeEvent.touches[0].clientX
+    // const yCoordinate = e.nativeEvent.touches[0].clientY -70
+    // setPathCurrentVal({'d'})
+
+
   }
 
   const touchDown = (e) => {
+    e.preventDefault()
+    var randomID = Math.floor(Math.random() * 16777215).toString(16)
 
-    const xCoordinate = e.pageX
-    const yCoordinate = e.pageY - 80
-    setPathCurrentVal(pathCurrentVal + " " + xCoordinate + " " + yCoordinate)
-    setFireStatus(true)
+    const xCoordinate = e.nativeEvent.touches[0].clientX
+    const yCoordinate = e.nativeEvent.touches[0].clientY -70
+    const pathProperties = { 'd': `M${xCoordinate} ${yCoordinate}`, 'stroke': color, 'strokeWidth': currentPathWidth, 'id': randomID }
+    setElemants([...elemants, pathProperties,pathProperties])
+
+
+    startVal.current.start = `${startVal.current.start}${xCoordinate} ${yCoordinate} `
+    setPathCurrentVal(startVal.current.start)
+    // console.log({xCoordinate,yCoordinate})
+  }
+
+  const touchMove = (e) => {
+    e.preventDefault()
+
+    const xCoordinate = e.nativeEvent.touches[0].clientX
+    const yCoordinate = e.nativeEvent.touches[0].clientY -70
+    // setPathCurrentVal((pre)=>(pre + " " + xCoordinate + " " + yCoordinate))
+    const pathProperties = `${xCoordinate} ${yCoordinate} `
+    setPathCurrentVal(pre=>pre+pathProperties)
+    console.log(pathCurrentVal)
   }
   const pointerDown = (e) => {
 
@@ -132,7 +158,7 @@ function App() {
   return (
     <>
       <Layout remove={remove} colorChange={setColor} selectLine={selectLine} width={currentPathWidth} lineWidth={lineWidth}>
-        <div onPointerDown={(e) => onDevice.current.mobile ? touchDown(e) : pointerDown(e)} onPointerMove={(e) => { onDevice.current.mobile ? "" : pointerMove(e) }} onPointerUp={(e) => { onDevice.current.mobile ? touchUp(e) : pointerUp(e) }} draggable="false" className='bg-[#333] touch-none'>
+        <div onPointerDown={(e) => onDevice.current.mobile ? "" : pointerDown(e)} onPointerMove={(e) => { onDevice.current.mobile ? "" : pointerMove(e) }} onPointerUp={(e) => { onDevice.current.mobile ? touchUp(e) : pointerUp(e) }} onTouchStart={(e) => {onDevice.current.mobile ? touchDown(e) : ""}} onTouchMove={(e) => {onDevice.current.mobile ? touchMove(e) : ""}} draggable="false" className='bg-[#333] touch-none'>
           <svg ref={svgElement} xmlns="http://www.w3.org/2000/svg" className='h-[calc(100vh_-_140px)] w-full'>
             {elemants.map((element, index) => { return <path onClick={(e) => { if (select) setCurrentSelect(e.target.id) }} key={index} id={element.id} d={element.d} fill="none" stroke={element.stroke} strokeWidth={element.strokeWidth}></path> })}
           </svg>
